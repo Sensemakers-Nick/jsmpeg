@@ -43,6 +43,7 @@ declare module "jsmpeg"{
         autoplay?: boolean;
         video?: boolean;
         disableGl?: boolean;
+        poster?: string;
         playingStateChange?: (playingState: boolean) => void;
     }
 
