@@ -43,7 +43,7 @@ WSSource.prototype.start = function() {
 	this.socket.binaryType = 'arraybuffer';
 	this.socket.onmessage = this.onMessage.bind(this);
 	this.socket.onopen = this.onOpen.bind(this);
-	this.socket.onerror = this.onClose.bind(this);
+	this.socket.onerror = this.onError.bind(this);
 	this.socket.onclose = this.onClose.bind(this);
 };
 
@@ -56,7 +56,18 @@ WSSource.prototype.onOpen = function() {
 	this.established = true;
 };
 
-WSSource.prototype.onClose = function() {
+WSSource.prototype.onClose = function(ev) {
+	console.log("close event", ev)
+	if (this.shouldAttemptReconnect) {
+		clearTimeout(this.reconnectTimeoutId);
+		this.reconnectTimeoutId = setTimeout(function(){
+			this.start();
+		}.bind(this), this.reconnectInterval*1000);
+	}
+};
+
+WSSource.prototype.onError = function(ev) {
+	console.log("error event", ev)
 	if (this.shouldAttemptReconnect) {
 		clearTimeout(this.reconnectTimeoutId);
 		this.reconnectTimeoutId = setTimeout(function(){
