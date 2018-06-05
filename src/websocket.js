@@ -57,7 +57,7 @@ WSSource.prototype.onOpen = function() {
 };
 
 WSSource.prototype.onClose = function(ev) {
-	console.log("close event", ev)
+	console.log("close event", ev);
 	if (this.shouldAttemptReconnect) {
 		clearTimeout(this.reconnectTimeoutId);
 		this.reconnectTimeoutId = setTimeout(function(){
@@ -67,7 +67,7 @@ WSSource.prototype.onClose = function(ev) {
 };
 
 WSSource.prototype.onError = function(ev) {
-	console.log("error event", ev)
+	console.log("error event", ev);
 	if (this.shouldAttemptReconnect) {
 		clearTimeout(this.reconnectTimeoutId);
 		this.reconnectTimeoutId = setTimeout(function(){
